@@ -4,6 +4,7 @@ import DisplayBattle from './components/DisplayBattle'
 import LocationList from './components/LocationList'
 import Selector from './components/Selector'
 import './App.css'
+import ListLocations from './components/ListLocations/ListLocations'
 
 
 
@@ -24,6 +25,31 @@ function App() {
   const [selectedUserPokemon, setSelectedUserPokemon] = useState(null)
   const [encounterPokemon, setEncounterPokemon] = useState({});
   
+
+
+useEffect(()=>{
+  try{
+    fetchData("https://pokeapi.co/api/v2/location").then(location=>{
+      setLocations(location.results)
+      console.log(location.results)
+    })
+  }catch(error){console.log(error)}
+
+},[])
+
+
+
+function handleLocationClick(){
+  setShowLocations(false)
+  
+  //encounteredPokemon set
+  //show location set to false
+}
+
+
+
+
+
   const  fetchData = async (url) => {
     return await fetch(url).then((response) => {
       if (response.ok) {
@@ -37,7 +63,7 @@ function App() {
   
   return (
     <>
-  {showLocations ? <LocationList/> : selectedUserPokemon ? <Battle/> : <Selector/>}
+  {showLocations ? <ListLocations onLocationClick={handleLocationClick} locations={locations}/> : selectedUserPokemon ? <Battle/> : <Selector/>}
     </>
   )
 }
