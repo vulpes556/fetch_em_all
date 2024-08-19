@@ -39,8 +39,9 @@ useEffect(()=>{
 
 
 function handleLocationClick(){
-  setShowLocations(false)
-  
+  setShowLocations(true)
+  setSelectedUserPokemon()
+
   //encounteredPokemon set
   //show location set to false
 }
