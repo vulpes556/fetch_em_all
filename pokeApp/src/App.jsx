@@ -125,7 +125,7 @@ console.log("encounteredPokemon:", encounterPokemon)
       <div className='nes-container is-rounded is-dark App' >
         <i className="nes-pokeball"></i>
         <h1>Pokemon Battle Game</h1>
-        {showLocations ? <ListLocations onSelectLocation={handleLocationClick} locations={locations} /> : selectedUserPokemon ? <Battle /> : <Selector encounterPokemon={encounterPokemon} myPokemons={userPokemons} onSelect={handleSelect}/>}
+        {showLocations ? <ListLocations onSelectLocation={handleLocationClick} locations={locations} /> : selectedUserPokemon ? <Battle /> : <Selector encounterPokemon={encounterPokemon} myPokemons={userPokemons} onSelect={handleSelect} goBack={()=>{setShowLocations(true)}}/>}
       </div>
     </>
   )

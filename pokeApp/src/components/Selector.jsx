@@ -1,7 +1,7 @@
 import React from "react";
 import UserPokeList from "./UserPokeList";
 
-const Selector = ({ encounterPokemon, myPokemons , onSelect}) => {
+const Selector = ({ encounterPokemon, myPokemons , onSelect, goBack}) => {
   
   return <>
   <h1 style={{marginTop: 1 +"em"}}>Choose a pokemon</h1>
@@ -16,6 +16,7 @@ const Selector = ({ encounterPokemon, myPokemons , onSelect}) => {
       <UserPokeList myPokemons={[encounterPokemon]}/>
     </div>
   </div>
+  <button onClick={goBack}>BACK</button>
   </>;
 };
 
