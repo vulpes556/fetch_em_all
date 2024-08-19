@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import Battle from './components/Battle'
 import DisplayBattle from './components/DisplayBattle'
-import LocationList from './components/LocationList'
 import Selector from './components/Selector'
 import './App.css'
-import ListLocations from './components/ListLocations/ListLocations'
+import ListLocations from './components/ListLocations'
 
 
 
@@ -66,7 +65,7 @@ function handleLocationClick(){
       <div className='nes-container is-rounded is-dark App' >
         <i className="nes-pokeball"></i>
         <h1>Pokemon Battle Game</h1>
-      {showLocations ? <LocationList /> : selectedUserPokemon ? <Battle /> : <Selector />}
+      {showLocations ? <ListLocations locations={locations} /> : selectedUserPokemon ? <Battle /> : <Selector />}
       </div>
     </>
   )
