@@ -15,16 +15,16 @@ const usersPokemon = [
 
 
 function App() {
-  
-  const [locations, setLocations] = useState([]); 
+
+  const [locations, setLocations] = useState([]);
   const [userPokemons, setUserPokemon] = useState([]);
-  
+
   const [showLocations, setShowLocations] = useState(true);
-  
+
   const [selectedUserPokemon, setSelectedUserPokemon] = useState(null)
   const [encounterPokemon, setEncounterPokemon] = useState({});
-  
-  const  fetchData = async (url) => {
+
+  const fetchData = async (url) => {
     return await fetch(url).then((response) => {
       if (response.ok) {
         return response.json();
@@ -34,10 +34,14 @@ function App() {
     });
   };
 
-  
+
   return (
     <>
-  {showLocations ? <LocationList/> : selectedUserPokemon ? <Battle/> : <Selector/>}
+      <div className='nes-container is-rounded is-dark App' >
+        <i className="nes-pokeball"></i>
+        <h1>Pokemon Battle Game</h1>
+      </div>
+      {showLocations ? <LocationList /> : selectedUserPokemon ? <Battle /> : <Selector />}
     </>
   )
 }
