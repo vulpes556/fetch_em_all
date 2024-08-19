@@ -1,0 +1,11 @@
+.App {
+    text-align: center;
+    overflow: hidden;
+    width: 100vw;
+    font-family: "PressStart2P";
+}
+
+@font-face {
+    font-family: "PressStart2P";
+    src: url("./assets/PressStart2P-Regular.ttf");
+}
