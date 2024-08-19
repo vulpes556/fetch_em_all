@@ -61,7 +61,7 @@ function App() {
 
 
   async function handleLocationClick(locationurl) {
-    setShowLocations(false)
+    
 
 
     //fetchData(location.url) => fetchData(areas.length(random).url) => fetchData(pokemon_encounters.length(random).pokemon.url) 
@@ -93,6 +93,7 @@ function App() {
         const randomPokemonUrl = data.pokemon_encounters[randomPokemonIndex].pokemon.url
          fetchData(randomPokemonUrl).then(pokeData => {
           setEncounterPokemon(pokeData)
+          setShowLocations(false)
          })
       })
     })
