@@ -23,34 +23,75 @@ function App() {
 
   const [selectedUserPokemon, setSelectedUserPokemon] = useState(null)
   const [encounterPokemon, setEncounterPokemon] = useState({});
-  
-
-
-useEffect(()=>{
-  try{
-    fetchData("https://pokeapi.co/api/v2/location").then(location=>{
-      setLocations(location.results)
-      console.log(location.results)
-    })
-  }catch(error){console.log(error)}
-
-},[])
 
 
 
-function handleLocationClick(){
-  setShowLocations(true)
-  setSelectedUserPokemon()
+  useEffect(() => {
+    try {
+      fetchData("https://pokeapi.co/api/v2/location").then(location => {
+        setLocations(location.results)
+      })
+    } catch (error) { console.log(error) }
 
-  //encounteredPokemon set
-  //show location set to false
-}
+  }, [])
+
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+
+  async function handleLocationClick(locationurl) {
+    setShowLocations(false)
+
+
+    //fetchData(location.url) => fetchData(areas.length(random).url) => fetchData(pokemon_encounters.length(random).pokemon.url) 
+
+    const location = await fetchData(locationurl)
+    console.log("location", location)
+    const randomAreaNumb = getRandomInt(0, location.areas.length-1)
+    console.log("randomAreaNumber: ", randomAreaNumb)
+    const randomAreaUrl = location.areas[randomAreaNumb].url
+    console.log("area url: ", randomAreaUrl)
+    const randomArea = await fetchData(randomAreaUrl)
+    console.log("randomArea:", randomArea)
+    const randomPokemonIndex = getRandomInt(0, randomArea.pokemon_encounters.length-1)
+    console.log("randomPokemonIndex:", randomPokemonIndex)
+    const randomPokemonURl = randomArea.pokemon_encounters[randomPokemonIndex].pokemon.url
+    const randomPokemon2 = await fetchData(randomPokemonURl)
+    console.log("randomPokemon:", randomPokemon2)
+    setEncounterPokemon(randomPokemon2)
+
+
+
+    // first version
+
+    // fetchData(locationurl).then(data => {
+    //   const randomAreaNumb = getRandomInt(0, data.areas.length-1)
+    //   const randomAreaUrl = data.areas[randomAreaNumb].url
+    //    fetchData(randomAreaUrl).then(data => {
+    //     const randomPokemonIndex = getRandomInt(0, data.pokemon_encounters.length-1)
+    //     const randomPokemonUrl = data.pokemon_encounters[randomPokemonIndex].pokemon.url
+    //      setEncounterPokemon(fetchData(randomPokemonUrl))
+    //   })
+    // })
+
+console.log("encounteredPokemon:", encounterPokemon)
+
+    // setEncounterPokemon()
+
+    //encounteredPokemon set
+    //show location set to false
+
+
+  }
 
 
 
 
 
-  const  fetchData = async (url) => {
+  const fetchData = async (url) => {
     return await fetch(url).then((response) => {
       if (response.ok) {
         return response.json();
@@ -66,7 +107,7 @@ function handleLocationClick(){
       <div className='nes-container is-rounded is-dark App' >
         <i className="nes-pokeball"></i>
         <h1>Pokemon Battle Game</h1>
-      {showLocations ? <ListLocations locations={locations} /> : selectedUserPokemon ? <Battle /> : <Selector />}
+        {showLocations ? <ListLocations onSelectLocation={handleLocationClick} locations={locations} /> : selectedUserPokemon ? <Battle /> : <Selector />}
       </div>
     </>
   )
