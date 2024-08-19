@@ -11,7 +11,7 @@ const Selector = ({ encounterPokemon, myPokemons , onSelect}) => {
     <UserPokeList myPokemons={myPokemons} onSelect={onSelect}/>
     </div>
     
-    <div>
+    <div >
       <h2 style={{marginBottom: 2 +"em"}}>Encounter pokemon</h2>
       <UserPokeList myPokemons={[encounterPokemon]}/>
     </div>
