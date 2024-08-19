@@ -1,53 +1,35 @@
 import { useState, useEffect } from 'react'
+import Battle from './components/Battle'
+import DisplayBattle from './components/DisplayBattle'
+import LocationList from './components/LocationList'
+import Selector from './components/Selector'
 import './App.css'
-import ListLocations from './components/ListLocations/ListLocations'
 
 
+const  fetchData = async (url) => {
+  return await fetch(url).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("error during fetch");
+    }
+  });
+};
 
-
-
-
-async function fetchData(url) {
-  const response = await fetch(url)
-  if (response.ok) {
-    const data = await response.json()
-    console.log( data)
-    return data
-  } else {
-    throw new Error("Error while fetching data")
-  }
-}
-
-
-
-
-
-
+const usersPokemon = [
+  "https://pokeapi.co/api/v2/pokemon/bulbasaur",
+  "https://pokeapi.co/api/v2/pokemon/charizard",
+  "https://pokeapi.co/api/v2/pokemon/poliwhirl"
+]
 
 
 function App() {
 
-  const [locations, setLocations] = useState([])
-
-
-  useEffect(() => {
-    try {
-      fetchData("https://pokeapi.co/api/v2/location").then(locations => {
-        setLocations(locations.results)
-      })
-    } catch (error) { console.log(error) }
-  },[])
-
-
-
-
-return (
-  <>
-  {locations.map(location => 
-    <ListLocations key={location.name} name={location.name}/>
-  )}
-  </>
-)
+  return (
+    <>
+  {showLocations ? <LocationList/> : selectedUserPokemon ? <Battle/> : <Selector/>}
+    </>
+  )
 }
 
 export default App
