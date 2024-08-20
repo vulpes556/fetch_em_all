@@ -1,0 +1,169 @@
+@font-face {
+    font-family: "PressStart2P";
+    src: url("./assets/PressStart2P-Regular.ttf");
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    /* width: fit-content(100%); */
+    font-family: "PressStart2P";
+    overflow: hidden;
+    height: 98dvh;
+    width: 98vw;
+    max-height: 100dvh;
+    max-width: 100dvw;
+}
+
+.titleBar  {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.message {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 1.2rem;
+}
+
+.game {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+}
+
+.battle {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items:center;
+    background-image: url("./assets/OIP.jpg");
+    background-size: cover;
+    padding: 1rem;    
+    border-radius: 10px;
+    color: white;
+    width: 100%;
+    height: 95%;
+}
+
+.pokemon-selection,
+.battle {
+    margin-top: 20px;
+}
+
+.pokemon-list button {
+    margin: 0.6rem;
+    padding: 0.6rem;
+    font-size: 1rem;
+}
+
+.pokemon-status {
+    display: flex;
+    gap: 5rem;
+    /* justify-content: space-between; */
+    margin-bottom: 20px;
+}
+
+
+/* 
+@keyframes shake {
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+
+    20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+    }
+
+    30% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+
+    40% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+
+    50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+
+    90% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
+}
+ */
+.pokemon-status div img.attacking {
+    animation: shake 0.5s;
+    animation-iteration-count: 1;
+}
+
+.life-bar-container {
+    width: 100px;
+    height: 10px;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    margin: 5px auto;
+    position: relative;
+}
+
+.life-bar {
+    height: 100%;
+    background-color: #4caf50;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: width 0.3s;
+}
+
+li {
+    list-style: none;
+    text-align: start;
+    border-bottom: 1px solid gray;
+    padding: 0.2rem;
+    font-size: 0.8rem;
+}
+
+.attack-options {
+    display: flex;
+    justify-content: center;
+    gap:1rem;
+}
+
+.attack-logs {
+    margin-top: 1rem;
+    max-height: 40dvh;
+    overflow-y: auto;
+    width: fit-content;
+}
+
+a {
+    text-align: left;
+}

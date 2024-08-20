@@ -1,22 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import UserPokeList from "./UserPokeList";
 
 const Selector = ({ encounterPokemon, myPokemons , onSelect, goBack}) => {
-  
+  const [showDetails, setShowDetails] = useState(false)
   return <>
-  <h1 style={{marginTop: 1 +"em"}}>Choose a pokemon</h1>
-  <div className="d-flex justify-content-between" style={{margin: 3 +"em"}}>
-    <div >
-      <h2 style={{marginBottom: 2 +"em"}}>User's pokemons</h2>
-    <UserPokeList myPokemons={myPokemons} onSelect={onSelect}/>
-    </div>
     
-    <div >
-      <h2 style={{marginBottom: 2 +"em"}}>Encounter pokemon</h2>
-      <UserPokeList myPokemons={[encounterPokemon]}/>
-    </div>
-  </div>
-  <button onClick={goBack}>BACK</button>
+        <div className='pokemon-selection'>
+          
+          <div className='pokemon-list'>
+            {myPokemons.map((pokemon) => (
+              <button key={pokemon.name} type='button' className='nes-btn'onClick={() => onSelect(pokemon)}>
+                <img src={pokemon.sprite}/>
+                {pokemon.name}
+              </button>
+            ))}
+          </div>
+        </div>
+        
+      
   </>;
 };
 
