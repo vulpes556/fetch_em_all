@@ -1,6 +1,6 @@
 import React from "react";
 
-const DisplayBattle = ({ pokemon }) => {
+const DisplayBattle = ({ pokemon, hp }) => {
   return (
     <div className="pokemon-status">
       <h3>{pokemon.name}</h3>
@@ -10,10 +10,11 @@ const DisplayBattle = ({ pokemon }) => {
         alt={pokemon.name}
         className={pokemon.isAttacking ? "attacking" : ""}
       />
+      <p>{hp} HP</p>
       <div className="life-bar-container">
         <progress
           className="nes-progress is-success life-bar"
-          value="90"
+          value={(hp/pokemon.hp)*100}
           max="100"
         ></progress>
       </div>

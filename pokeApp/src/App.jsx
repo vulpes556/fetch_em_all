@@ -146,7 +146,7 @@ function App() {
               },
               special: {
                 name: pokeData.moves[1].move.name,
-                uses: 5,
+                uses: 2,
               },
             },
             url: `https://pokeapi.co/api/v2/pokemon/${pokeData.name}`,
