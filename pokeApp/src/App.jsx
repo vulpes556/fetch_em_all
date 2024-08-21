@@ -6,19 +6,17 @@ import "./App.css";
 import ListLocations from "./components/ListLocations";
 import pokemonData from "../../batt-bence/pokeApp/src/assets/testData";
 
-const usersPokemon = [
-  "https://pokeapi.co/api/v2/pokemon/bulbasaur",
-  "https://pokeapi.co/api/v2/pokemon/charizard",
-  "https://pokeapi.co/api/v2/pokemon/poliwhirl",
-];
 
 function App() {
   const [locations, setLocations] = useState([]);
   const [userPokemons, setUserPokemon] = useState([]);
   const [userPokeURL, setUserPokeURL] = useState([
-    "https://pokeapi.co/api/v2/pokemon/bulbasaur",
-    "https://pokeapi.co/api/v2/pokemon/charizard",
-    "https://pokeapi.co/api/v2/pokemon/poliwhirl",
+    "https://pokeapi.co/api/v2/pokemon/gyarados",
+    "https://pokeapi.co/api/v2/pokemon/pikachu",
+    "https://pokeapi.co/api/v2/pokemon/meowth",
+    "https://pokeapi.co/api/v2/pokemon/arceus",
+    "https://pokeapi.co/api/v2/pokemon/mewtwo",
+    "https://pokeapi.co/api/v2/pokemon/magikarp"
   ]);
 
   const [showLocations, setShowLocations] = useState(true);
@@ -35,6 +33,34 @@ function App() {
       }
     });
   };
+  
+  const resetGame = () => {
+    setUserPokemon([]);
+    setUserPokeURL([
+      "https://pokeapi.co/api/v2/pokemon/gyarados",
+      "https://pokeapi.co/api/v2/pokemon/pikachu",
+      "https://pokeapi.co/api/v2/pokemon/meowth",
+      "https://pokeapi.co/api/v2/pokemon/arceus",
+      "https://pokeapi.co/api/v2/pokemon/mewtwo",
+      "https://pokeapi.co/api/v2/pokemon/magikarp"
+    ]);  
+    setSelectedUserPokemon(null);
+    setEncounterPokemon({});
+    setShowLocations(true);  
+  }
+
+function handleLost() {
+  setShowLocations(true)
+  setSelectedUserPokemon(null)
+}
+
+function handleCapture(url){
+  if(userPokeURL.includes(url)){
+    setUserPokeURL([...userPokeURL, url])
+  }
+handleLost()
+}
+
 
   const fetchUserPokemons = async () => {
     const userPokemonData = await Promise.all(
@@ -80,12 +106,19 @@ function App() {
     try {
       fetchData("https://pokeapi.co/api/v2/location").then((location) => {
         setLocations(location.results);
-        fetchUserPokemons();
+        
       });
     } catch (error) {
       console.log(error);
     }
   }, []);
+  
+  useEffect(()=>{
+    try{
+      fetchUserPokemons()
+    }catch(error){console.log(error)}
+
+  },[userPokeURL])
 
   function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -117,46 +150,53 @@ function App() {
       const randomAreaNumb = getRandomInt(0, data.areas.length - 1);
       const randomAreaUrl = data.areas[randomAreaNumb].url;
       fetchData(randomAreaUrl).then((data) => {
-        const randomPokemonIndex = getRandomInt(
+        let randomPokemonIndex = getRandomInt(
           0,
           data.pokemon_encounters.length - 1
         );
-        const randomPokemonUrl =
-          data.pokemon_encounters[randomPokemonIndex].pokemon.url;
+        //felpusholom utána ujrainditom a gépet 
+        //mert ez nem játék, hanem vírus csak ezt kikommentelem
+        let randomPokemonUrl = "https://pokeapi.co/api/v2/pokemon/magikarp"
+          //data.pokemon_encounters[randomPokemonIndex].pokemon.url;
+          while(!userPokeURL.some((pokeUrl)=> pokeUrl === randomPokemonUrl)){
+            handleLocationClick(locationurl)
+          }
         fetchData(randomPokemonUrl).then((pokeData) => {
-          setEncounterPokemon({
-            name: pokeData.name,
-            hp: pokeData.stats.find((stat) => stat.stat.name === "hp")
-              .base_stat,
-            def: pokeData.stats.find((stat) => stat.stat.name === "defense")
-              .base_stat,
-            atk: pokeData.stats.find((stat) => stat.stat.name === "attack")
-              .base_stat,
-            specAtk: pokeData.stats.find(
-              (stat) => stat.stat.name === "special-attack"
-            ).base_stat,
-            speed: pokeData.stats.find((stat) => stat.stat.name === "speed")
-              .base_stat,
-            sprite: pokeData.sprites.front_default,
-            type: pokeData.types[0].type.name,
-            attack: {
-              normal: {
-                name: pokeData.moves[0].move.name,
-                uses: 1000,
+
+            setEncounterPokemon({
+              name: pokeData.name,
+              hp: pokeData.stats.find((stat) => stat.stat.name === "hp")
+                .base_stat,
+              def: pokeData.stats.find((stat) => stat.stat.name === "defense")
+                .base_stat,
+              atk: pokeData.stats.find((stat) => stat.stat.name === "attack")
+                .base_stat,
+              specAtk: pokeData.stats.find(
+                (stat) => stat.stat.name === "special-attack"
+              ).base_stat,
+              speed: pokeData.stats.find((stat) => stat.stat.name === "speed")
+                .base_stat,
+              sprite: pokeData.sprites.front_default,
+              type: pokeData.types[0].type.name,
+              attack: {
+                normal: {
+                  name: pokeData.moves[0].move.name,
+                  uses: 1000,
+                },
+                special: {
+                  name: pokeData.moves[1].move.name,
+                  uses: 2,
+                },
               },
-              special: {
-                name: pokeData.moves[1].move.name,
-                uses: 2,
-              },
-            },
-            url: `https://pokeapi.co/api/v2/pokemon/${pokeData.name}`,
-            cry: pokeData.cries.latest,
-          });
+              url: `https://pokeapi.co/api/v2/pokemon/${pokeData.name}`,
+              cry: pokeData.cries.latest,
+            });
+
 
           setShowLocations(false);
         });
       });
-    });
+    }).catch(error => {console.log(error)});
 
     console.log("encounteredPokemon:", encounterPokemon);
   }
@@ -165,6 +205,8 @@ function App() {
     setSelectedUserPokemon(pokemon);
     console.log(pokemon);
   };
+  
+  
 
   return (
     <>
@@ -172,7 +214,7 @@ function App() {
         <div className="titleBar">
           <i className="nes-pokeball"></i>
           <h1>Pokémon Battle Game</h1>
-          <button className="nes-btn is-error">Reset Game</button>
+          <button className="nes-btn is-error" onClick={resetGame}>Reset Game</button>
         </div>
         {showLocations ? (
           <ListLocations
@@ -183,6 +225,8 @@ function App() {
           <Battle
             playerPokemon={selectedUserPokemon}
             opponentPokemon={encounterPokemon}
+            onLost={handleLost}
+            onWin={handleCapture}
           />
         ) : (
           <Selector
