@@ -158,7 +158,7 @@ handleLost()
         //mert ez nem játék, hanem vírus csak ezt kikommentelem
         let randomPokemonUrl = "https://pokeapi.co/api/v2/pokemon/magikarp"
           //data.pokemon_encounters[randomPokemonIndex].pokemon.url;
-          while(!userPokeURL.some((pokeUrl)=> pokeUrl === randomPokemonUrl)){
+          if(!userPokeURL.some((pokeUrl)=> pokeUrl === randomPokemonUrl)){
             handleLocationClick(locationurl)
           }
         fetchData(randomPokemonUrl).then((pokeData) => {
