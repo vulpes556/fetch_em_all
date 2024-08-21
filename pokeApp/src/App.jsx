@@ -17,6 +17,8 @@ function App() {
     "https://pokeapi.co/api/v2/pokemon/arceus",
     "https://pokeapi.co/api/v2/pokemon/mewtwo",
     "https://pokeapi.co/api/v2/pokemon/magikarp"
+    
+    
   ]);
 
   const [showLocations, setShowLocations] = useState(true);
@@ -126,25 +128,8 @@ handleLost()
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  
   async function handleLocationClick(locationurl) {
-    //fetchData(location.url) => fetchData(areas.length(random).url) => fetchData(pokemon_encounters.length(random).pokemon.url)
-
-    // const location = await fetchData(locationurl)
-    // console.log("location", location)
-    // const randomAreaNumb = getRandomInt(0, location.areas.length-1)
-    // console.log("randomAreaNumber: ", randomAreaNumb)
-    // const randomAreaUrl = location.areas[randomAreaNumb].url
-    // console.log("area url: ", randomAreaUrl)
-    // const randomArea = await fetchData(randomAreaUrl)
-    // console.log("randomArea:", randomArea)
-    // const randomPokemonIndex = getRandomInt(0, randomArea.pokemon_encounters.length-1)
-    // console.log("randomPokemonIndex:", randomPokemonIndex)
-    // const randomPokemonURl = randomArea.pokemon_encounters[randomPokemonIndex].pokemon.url
-    // const randomPokemon2 = await fetchData(randomPokemonURl)
-    // console.log("randomPokemon:", randomPokemon2)
-    // setEncounterPokemon(randomPokemon2)
-
-    // first version
 
     fetchData(locationurl).then((data) => {
       const randomAreaNumb = getRandomInt(0, data.areas.length - 1);
@@ -154,12 +139,17 @@ handleLost()
           0,
           data.pokemon_encounters.length - 1
         );
-        //felpusholom utána ujrainditom a gépet 
-        //mert ez nem játék, hanem vírus csak ezt kikommentelem
-        let randomPokemonUrl = "https://pokeapi.co/api/v2/pokemon/magikarp"
-          //data.pokemon_encounters[randomPokemonIndex].pokemon.url;
-          if(!userPokeURL.some((pokeUrl)=> pokeUrl === randomPokemonUrl)){
+
+        
+        let randomPokemonUrl = 
+          data.pokemon_encounters[randomPokemonIndex].pokemon.url;
+          console.log(randomPokemonUrl);
+          
+          if(userPokemons.some((pokemon)=> pokemon.name === data.pokemon_encounters[randomPokemonIndex].pokemon.name )){
             handleLocationClick(locationurl)
+            console.log(data.pokemon_encounters[randomPokemonIndex].pokemon.name);
+            
+            return;
           }
         fetchData(randomPokemonUrl).then((pokeData) => {
 
