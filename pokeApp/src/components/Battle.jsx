@@ -105,6 +105,7 @@ const Battle = ({ playerPokemon, opponentPokemon,onLost, onWin }) => {
             >
               {playerPokemon.attack.normal.name}
             </button>
+            {playerPokemon.attack.normal.name === playerPokemon.attack.special.name ? <button className="nes-btn is-warning is-disabled">No Spec Attack</button>:
             <button
               className={`nes-btn is-warning ${
                 (!isPlayerTurn && "is-disabled") ||
@@ -118,6 +119,7 @@ const Battle = ({ playerPokemon, opponentPokemon,onLost, onWin }) => {
               {playerPokemon.attack.special.name}
               {<br />}Uses left:{specAtkCounter}
             </button>
+            }
           </div>
           {playerHP === 0 && <button onClick={onLost}>Back</button>}
           {opponentHP === 0 && <button onClick={()=>{onWin(opponentPokemon.url)}} >Capture</button>}
