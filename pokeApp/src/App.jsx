@@ -53,7 +53,7 @@ function handleLost() {
 }
 
 function handleCapture(url){
-  if(userPokeURL.includes(url)){
+  if(!userPokeURL.includes(url)){
     setUserPokeURL([...userPokeURL, url])
   }
 handleLost()
@@ -64,30 +64,29 @@ handleLost()
     const userPokemonData = await Promise.all(
       userPokeURL.map((url) => {
         return fetchData(url).then((pokeData) => {
-            return {
-              name: pokeData.name,
-              hp: pokeData.stats.find((stat) => stat.stat.name === "hp")
-                .base_stat,
-              def: pokeData.stats.find((stat) => stat.stat.name === "defense")
-                .base_stat,
-              atk: pokeData.stats.find((stat) => stat.stat.name === "attack")
-                .base_stat,
-              specAtk: pokeData.stats.find(
-                (stat) => stat.stat.name === "special-attack"
-              ).base_stat,
-              speed: pokeData.stats.find((stat) => stat.stat.name === "speed")
-                .base_stat,
-              sprite: pokeData.sprites.front_default,
-              type: pokeData.types[0].type.name,
-              attack: {
-                normal: {
-                  name: pokeData.moves[0].move.name,
-                  uses: 1000,
-                },
-                special: {
-                  name: pokeData.moves.length > 1 ? pokeData.moves[1].move.name : pokeData.moves[0].move.name,
-                  uses: 5,
-                },
+          return {
+            name: pokeData.name,
+            hp: pokeData.stats.find((stat) => stat.stat.name === "hp")
+              .base_stat,
+            def: pokeData.stats.find((stat) => stat.stat.name === "defense")
+              .base_stat,
+            atk: pokeData.stats.find((stat) => stat.stat.name === "attack")
+              .base_stat,
+            specAtk: pokeData.stats.find(
+              (stat) => stat.stat.name === "special-attack"
+            ).base_stat,
+            speed: pokeData.stats.find((stat) => stat.stat.name === "speed")
+              .base_stat,
+            sprite: pokeData.sprites.front_default,
+            type: pokeData.types[0].type.name,
+            attack: {
+              normal: {
+                name: pokeData.moves[0].move.name,
+                uses: 1000,
+              },
+              special: {
+                name: pokeData.moves.length === 1 ? pokeData.moves[0].move.name: pokeData.moves[1].move.name,
+                uses: 5,
               },
               url: `https://pokeapi.co/api/v2/pokemon/${pokeData.name}`,
               cry: pokeData.cries.latest,
@@ -104,6 +103,7 @@ handleLost()
     try {
       fetchData("https://pokeapi.co/api/v2/location").then((location) => {
         setLocations(location.results);
+        console.log(location);
         
       });
     } catch (error) {
@@ -175,7 +175,7 @@ handleLost()
                   uses: 1000,
                 },
                 special: {
-                  name: pokeData.moves[1].move.name,
+                  name: pokeData.moves.length === 1 ? pokeData.moves[0].move.name: pokeData.moves[1].move.name,
                   uses: 2,
                 },
               },
