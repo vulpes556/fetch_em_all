@@ -79,6 +79,11 @@ const Battle = ({ playerPokemon, opponentPokemon,onLost, onWin }) => {
     setAttacklogs((attacklogs) => attacklogs + "<p>" + log + "</p>");
   };
 
+  const PlaySound = () => {
+    const audio = new Audio("./src/assets/Tackle.mp3");
+    audio.play();
+  }
+
   return (
     <>
       <div className="game">
@@ -91,7 +96,7 @@ const Battle = ({ playerPokemon, opponentPokemon,onLost, onWin }) => {
           <div className="attack-options">
             <button
               type="button"
-              onClick={() => handleAttack(true)}
+              onClick={() => {handleAttack(true); PlaySound();}}
               className={`nes-btn is-warning ${
                 (!isPlayerTurn && "is-disabled") ||
                 (playerHP === 0 && "is-disabled")
@@ -107,7 +112,7 @@ const Battle = ({ playerPokemon, opponentPokemon,onLost, onWin }) => {
                 (playerHP === 0 && "is-disabled")
               }`}
               type="button"
-              onClick={() => handleAttack(false)}
+              onClick={() => {handleAttack(false); PlaySound();}}
               disabled={!isPlayerTurn || specAtkCounter < 1 || playerHP === 0}
             >
               {playerPokemon.attack.special.name}

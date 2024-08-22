@@ -89,7 +89,7 @@ handleLost()
                 uses: 1000,
               },
               special: {
-                name: pokeData.moves[1].move.name,
+                name: pokeData.moves.length === 1 ? pokeData.moves[0].move.name: pokeData.moves[1].move.name,
                 uses: 5,
               },
             },
@@ -108,6 +108,7 @@ handleLost()
     try {
       fetchData("https://pokeapi.co/api/v2/location").then((location) => {
         setLocations(location.results);
+        console.log(location);
         
       });
     } catch (error) {
@@ -174,7 +175,7 @@ handleLost()
                   uses: 1000,
                 },
                 special: {
-                  name: pokeData.moves[1].move.name,
+                  name: pokeData.moves.length === 1 ? pokeData.moves[0].move.name: pokeData.moves[1].move.name,
                   uses: 2,
                 },
               },

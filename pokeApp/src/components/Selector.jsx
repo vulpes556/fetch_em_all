@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import DisplayDetails from "./DisplayDetails";
 
 const Selector = ({ encounterPokemon, myPokemons, onSelect, goBack }) => {
   const [showDetails, setshowDetails] = useState(null);
@@ -7,18 +8,16 @@ const Selector = ({ encounterPokemon, myPokemons, onSelect, goBack }) => {
   return (
     <>
       <div>
-        <p>A wild {encounterPokemon.name} appeared</p>
-        <button
-          key={encounterPokemon.name}
-          type="button"
-          className="nes-btn"
-          onClick={() => {
-            setshowDetails(encounterPokemon);
-            setDetailedPokemon(null);
-          }}
-        >
-          <img src={encounterPokemon.sprite} /> {encounterPokemon.name}
-        </button>
+          <p>A wild {encounterPokemon.name} appeared</p>
+        <div className="pokemon-stats-selector">
+          {detailedPokemon && (
+            <DisplayDetails pokemon={detailedPokemon} onSelect={onSelect} />
+          )}
+          <p>Against</p>
+          <DisplayDetails pokemon={encounterPokemon} />
+        </div>
+        <hr />
+        <p>Choose your pokemon</p>
       </div>
       <div className="pokemon-selection">
         <div className="pokemon-list">
@@ -37,6 +36,12 @@ const Selector = ({ encounterPokemon, myPokemons, onSelect, goBack }) => {
             </button>
           ))}
         </div>
+      </div>
+          <div>
+      <button onClick={goBack} className="nes-btn is-warning">
+        Back
+      </button>
+      {detailedPokemon && <button onClick={() => onSelect(detailedPokemon)} className="nes-btn is-success">FIGHT !</button>}
       </div>
     </>
   );
