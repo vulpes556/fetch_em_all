@@ -57,7 +57,7 @@ function handleLost() {
 }
 
 function handleCapture(url){
-  if(userPokeURL.includes(url)){
+  if(!userPokeURL.includes(url)){
     setUserPokeURL([...userPokeURL, url])
   }
 handleLost()
