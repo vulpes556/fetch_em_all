@@ -12,14 +12,8 @@ function App() {
   const [locations, setLocations] = useState([]);
   const [userPokemons, setUserPokemon] = useState([]);
   const [userPokeURL, setUserPokeURL] = useState([
-    "https://pokeapi.co/api/v2/pokemon/gyarados",
-    "https://pokeapi.co/api/v2/pokemon/pikachu",
-    "https://pokeapi.co/api/v2/pokemon/meowth",
-    "https://pokeapi.co/api/v2/pokemon/arceus",
-    "https://pokeapi.co/api/v2/pokemon/mewtwo",
-    "https://pokeapi.co/api/v2/pokemon/magikarp"
-    
-    
+    "https://pokeapi.co/api/v2/pokemon/magikarp",
+    "https://pokeapi.co/api/v2/pokemon/unown",
   ]);
   const [noPokemonsHere, setNoPokemonsHere] = useState(false)
 
@@ -70,34 +64,34 @@ handleLost()
     const userPokemonData = await Promise.all(
       userPokeURL.map((url) => {
         return fetchData(url).then((pokeData) => {
-          return {
-            name: pokeData.name,
-            hp: pokeData.stats.find((stat) => stat.stat.name === "hp")
-              .base_stat,
-            def: pokeData.stats.find((stat) => stat.stat.name === "defense")
-              .base_stat,
-            atk: pokeData.stats.find((stat) => stat.stat.name === "attack")
-              .base_stat,
-            specAtk: pokeData.stats.find(
-              (stat) => stat.stat.name === "special-attack"
-            ).base_stat,
-            speed: pokeData.stats.find((stat) => stat.stat.name === "speed")
-              .base_stat,
-            sprite: pokeData.sprites.front_default,
-            type: pokeData.types[0].type.name,
-            attack: {
-              normal: {
-                name: pokeData.moves[0].move.name,
-                uses: 1000,
+            return {
+              name: pokeData.name,
+              hp: pokeData.stats.find((stat) => stat.stat.name === "hp")
+                .base_stat,
+              def: pokeData.stats.find((stat) => stat.stat.name === "defense")
+                .base_stat,
+              atk: pokeData.stats.find((stat) => stat.stat.name === "attack")
+                .base_stat,
+              specAtk: pokeData.stats.find(
+                (stat) => stat.stat.name === "special-attack"
+              ).base_stat,
+              speed: pokeData.stats.find((stat) => stat.stat.name === "speed")
+                .base_stat,
+              sprite: pokeData.sprites.front_default,
+              type: pokeData.types[0].type.name,
+              attack: {
+                normal: {
+                  name: pokeData.moves[0].move.name,
+                  uses: 1000,
+                },
+                special: {
+                  name: pokeData.moves.length > 1 ? pokeData.moves[1].move.name : pokeData.moves[0].move.name,
+                  uses: 5,
+                },
               },
-              special: {
-                name: pokeData.moves[1].move.name,
-                uses: 5,
-              },
-            },
-            url: `https://pokeapi.co/api/v2/pokemon/${pokeData.name}`,
-            cry: pokeData.cries.latest,
-          };
+              url: `https://pokeapi.co/api/v2/pokemon/${pokeData.name}`,
+              cry: pokeData.cries.latest,
+            };
         });
       })
     );
