@@ -37,6 +37,25 @@
     font-size: 1rem;
 }
 
+.location-selector {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.pokemon-stats-selector {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    gap:1rem;
+}
+.card-continer {
+    width: fit-content;
+}
+
 .game {
     display: flex;
     justify-content: center;
