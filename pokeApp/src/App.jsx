@@ -203,6 +203,11 @@ handleLost()
     console.log(pokemon);
   };
   
+function handleBack(){
+  setNoPokemonsHere(false)
+  setShowLocations(true)
+}
+
   
 
   return (
@@ -219,8 +224,8 @@ handleLost()
             locations={locations}
           />
         )  : noPokemonsHere  ? (
-          <NoPokemonsHere/>
-        ) : selectedUserPokemon && !noPokemonsHere ? (       
+          <NoPokemonsHere back={handleBack}/>
+        ) : selectedUserPokemon ? (       
              <Battle
           playerPokemon={selectedUserPokemon}
           opponentPokemon={encounterPokemon}

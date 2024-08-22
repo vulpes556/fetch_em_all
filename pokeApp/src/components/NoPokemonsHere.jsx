@@ -12,9 +12,12 @@ import React from "react";
 
 
 
-export default function NoPokemonsHere(){
+export default function NoPokemonsHere({back}){
+   return (
     <>
-    <h1>No pokemons here!</h1>
-    <button>Back</button>
+    <h1>Elvesztél a világűrben!</h1>
+    <button onClick={back}>Back</button>
     </>
+   )
+
 }
