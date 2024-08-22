@@ -5,6 +5,7 @@ import Selector from "./components/Selector";
 import "./App.css";
 import ListLocations from "./components/ListLocations";
 import pokemonData from "../../batt-bence/pokeApp/src/assets/testData";
+import NoPokemonsHere from "./components/NoPokemonsHere";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
     
     
   ]);
+  const [noPokemonsHere, setNoPokemonsHere] = useState(false)
 
   const [showLocations, setShowLocations] = useState(true);
 
@@ -132,6 +134,11 @@ handleLost()
   async function handleLocationClick(locationurl) {
 
     fetchData(locationurl).then((data) => {
+      if(data.areas.length === 0){
+        setShowLocations(false)
+        setNoPokemonsHere(true)
+        return
+      }
       const randomAreaNumb = getRandomInt(0, data.areas.length - 1);
       const randomAreaUrl = data.areas[randomAreaNumb].url;
       fetchData(randomAreaUrl).then((data) => {
@@ -206,19 +213,20 @@ handleLost()
           <h1>Pokémon Battle Game</h1>
           <button className="nes-btn is-error" onClick={resetGame}>Reset Game</button>
         </div>
-        {showLocations ? (
+        {showLocations ?  (
           <ListLocations
             onSelectLocation={handleLocationClick}
             locations={locations}
           />
-        ) : selectedUserPokemon ? (
-          <Battle
-            playerPokemon={selectedUserPokemon}
-            opponentPokemon={encounterPokemon}
-            onLost={handleLost}
-            onWin={handleCapture}
-          />
-        ) : (
+        )  : noPokemonsHere  ? (
+          <NoPokemonsHere/>
+        ) : selectedUserPokemon && !noPokemonsHere ? (       
+             <Battle
+          playerPokemon={selectedUserPokemon}
+          opponentPokemon={encounterPokemon}
+          onLost={handleLost}
+          onWin={handleCapture}
+        />) : (
           <Selector
             encounterPokemon={encounterPokemon}
             myPokemons={userPokemons}
@@ -234,3 +242,10 @@ handleLost()
 }
 
 export default App;
+
+{/* <Battle
+playerPokemon={selectedUserPokemon}
+opponentPokemon={encounterPokemon}
+onLost={handleLost}
+onWin={handleCapture}
+/> */}
