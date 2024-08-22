@@ -9,9 +9,9 @@ const DisplayDetails = ({ pokemon, onSelect }) => {
         </div>
         <ul className="list-group list-group-flush">
           <li className="list-group-item">{pokemon.name}</li>
-          <li className="list-group-item">{pokemon.hp} HP</li>
-          <li className="list-group-item">{pokemon.atk} ATK</li>
-          <li className="list-group-item">{pokemon.def} DEF</li>
+          <li className="list-group-item">HP: {pokemon.hp}</li>
+          <li className="list-group-item">ATK: {pokemon.atk}</li>
+          <li className="list-group-item">DEF: {pokemon.def}</li>
         </ul>
         {/* {onSelect && <button onClick={() => onSelect(pokemon)} className="nes-btn is-success">SELECT</button>} */}
       </div>

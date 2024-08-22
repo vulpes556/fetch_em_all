@@ -1,34 +1,37 @@
 import React, { useEffect, useState } from "react";
 import DisplayBattle from "./DisplayBattle";
 
-const Battle = ({ playerPokemon, opponentPokemon,onLost, onWin }) => {
+const Battle = ({ playerPokemon, opponentPokemon,onLost, onWin, random }) => {
+
+  // state variables here
   const [playerHP, setPlayerHP] = useState(playerPokemon.hp);
   const [opponentHP, setOpponentHP] = useState(opponentPokemon.hp);
   const [isPlayerTurn, setIsPlayerTurn] = useState(true);
+  const [attacklogs, setAttacklogs] = useState(["Battle", "Select a move"]);
   const [specAtkCounter, setSpecAtkCounter] = useState(
     opponentPokemon.attack.special.uses
   );
-  // const [message, setMessage] = useState(['Battle','Attack']);
-  const [attacklogs, setAttacklogs] = useState(["Battle", "Select a move"]);
 
+  // damage calculation based on the given formula
   const calculateDamage = (attacker, defender, isNormal) => {
     const B = isNormal ? attacker.atk : attacker.specAtk;
     const D = defender.def;
-    const Z = Math.floor(Math.random() * (255 - 217 + 1)) + 217; //gives back random number between 217 and 255
+    const Z = random(217,255); //gives back random number between 217 and 255
+    /* const Z = Math.floor(Math.random() * (255 - 217 + 1)) + 217; //gives back random number between 217 and 255 */
     return ((((2 / 5 + 2) * B * 60) / D / 50 + 2) * Z) / 255;
   };
 
+  //upon using spec atk, decrease it's use-counter (user's turn)
   const handleAttack = (isNormal) => {
     !isNormal && setSpecAtkCounter(specAtkCounter - 1);
 
+    //logic for calculating dmg, turns, atk logs
     const damage = Math.round(
       calculateDamage(playerPokemon, opponentPokemon, isNormal)
     );
     opponentHP - damage > 0
       ? setOpponentHP(opponentHP - damage)
       : setOpponentHP(0);
-
-    console.log(damage);
     setIsPlayerTurn(false);
     setAttacklogs([
       ...attacklogs,
@@ -37,10 +40,11 @@ const Battle = ({ playerPokemon, opponentPokemon,onLost, onWin }) => {
           ? playerPokemon.attack.normal.name
           : playerPokemon.attack.special.name
       }
-      Hit: -${damage} HP`,
+      . Hit: -${damage} HP`,
     ]);
   };
-
+  
+// when it's not the player's turn, the enemy attacks(enemy's turn)
   useEffect(() => {
     if (isPlayerTurn === false && opponentHP > 0) {
       setTimeout(() => {
@@ -58,12 +62,13 @@ const Battle = ({ playerPokemon, opponentPokemon,onLost, onWin }) => {
               ? opponentPokemon.attack.normal.name
               : opponentPokemon.attack.special.name
           }
-          Hit: -${damage} HP`,
+          . Hit: -${damage} HP`,
         ]);
       }, 1000);
     }
   }, [isPlayerTurn]);
 
+  // lets the player know about the outcome of the battle
   useEffect(() => {
     if (playerHP === 0) {
       setAttacklogs([...attacklogs, "LOST"]);
@@ -73,12 +78,7 @@ const Battle = ({ playerPokemon, opponentPokemon,onLost, onWin }) => {
     }
   }, [playerHP, opponentHP]);
 
-  const addLog = (log) => {
-    console.log(log);
-
-    setAttacklogs((attacklogs) => attacklogs + "<p>" + log + "</p>");
-  };
-
+  // play attack sound
   const PlaySound = () => {
     const audio = new Audio("./src/assets/Tackle.mp3");
     audio.play();
@@ -121,14 +121,14 @@ const Battle = ({ playerPokemon, opponentPokemon,onLost, onWin }) => {
             </button>
             }
           </div>
-          {playerHP === 0 && <button onClick={onLost}>Back</button>}
-          {opponentHP === 0 && <button onClick={()=>{onWin(opponentPokemon.url)}} >Capture</button>}
+          {playerHP === 0 && <button onClick={onLost} className="nes-btn is-error">Back</button>}
+          {opponentHP === 0 && <button onClick={()=>{onWin(opponentPokemon.url)}} className="nes-btn is-success"><i className="nes-pokeball"></i><br></br>CAPTURE</button>}
           <div className="nes-container with-title is-centered is-dark">
             <p className="title">Battle log</p>
             <div className="attack-logs">
-              {attacklogs.map((attacklog, index) => (
+              {attacklogs.slice().reverse().map((attacklog, index) => (
                 <p key={index} className="battle-log-p">{`${
-                  index + 1
+                  attacklogs.length - index
                 }: ${attacklog}`}</p>
               ))}
             </div>
@@ -140,21 +140,3 @@ const Battle = ({ playerPokemon, opponentPokemon,onLost, onWin }) => {
 };
 
 export default Battle;
-
-/* 
-<section>
-  <button type="button" class="nes-btn is-primary" onclick="document.getElementById('dialog-default').showModal();">
-    Open dialog
-  </button>
-  <dialog class="nes-dialog" id="dialog-default">
-    <form method="dialog">
-      <p class="title">Dialog</p>
-      <p>Alert: this is a dialog.</p>
-      <menu class="dialog-menu">
-        <button class="nes-btn">Cancel</button>
-        <button class="nes-btn is-primary">Confirm</button>
-      </menu>
-    </form>
-  </dialog>
-</section>
-*/

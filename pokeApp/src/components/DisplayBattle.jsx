@@ -10,7 +10,9 @@ const DisplayBattle = ({ pokemon, hp }) => {
         alt={pokemon.name}
         className={pokemon.isAttacking ? "attacking" : ""}
       />
-      <p>{hp} HP</p>
+
+      <p>HP: {hp}</p>
+
       <div className="life-bar-container">
         <progress
           className="nes-progress is-success life-bar"
@@ -18,14 +20,8 @@ const DisplayBattle = ({ pokemon, hp }) => {
           max="100"
         ></progress>
       </div>
-
-      {/* {renderLifeBar(playerPokemon?.hp, playerPokemon?.maxHp)} <p>HP: {playerPokemon?.hp}</p> */}
+      
     </div>
-    //   <div className='life-bar-container'>
-    //   <div className='life-bar'
-    //     style={{ width: `${widthPercentage}%` }}
-    //   ></div>
-    // </div>
   );
 };
 

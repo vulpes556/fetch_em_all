@@ -1,10 +1,12 @@
 import React from "react";
 
+// make the location name more readable
 function formatter(text) {
   text = text.replace(/-/g, ' ');
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+// Lists locations
 export default function ListLocations({ locations, onSelectLocation }) {
   return (
     <>

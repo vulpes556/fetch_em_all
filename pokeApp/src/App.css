@@ -26,17 +26,6 @@
     width: 100%;
 }
 
-.pokemon-selection,
-.battle {
-    margin-top: 20px;
-}
-
-.pokemon-list button {
-    margin: 0.6rem;
-    padding: 0.6rem;
-    font-size: 1rem;
-}
-
 .location-selector {
     margin-top: 2rem;
     display: flex;
@@ -45,6 +34,7 @@
     flex-wrap: wrap;
     gap: 0.5rem;
 }
+
 .pokemon-stats-selector {
     display: flex;
     flex-direction: row;
@@ -52,6 +42,7 @@
     align-items: center;
     gap:1rem;
 }
+
 .card-continer {
     width: fit-content;
 }
@@ -62,6 +53,7 @@
     align-items: flex-start;
     width: 100%;
     /* height: 100%; */
+    margin-top: 2rem;
 }
 
 .battle {
@@ -113,4 +105,14 @@
     border-bottom: 1px solid gray;
     padding: 0.2rem;
     font-size: 0.8rem;
+}
+
+.wrong-turn {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding: 1rem;
 }

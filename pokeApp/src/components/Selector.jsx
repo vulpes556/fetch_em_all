@@ -8,12 +8,13 @@ const Selector = ({ encounterPokemon, myPokemons, onSelect, goBack }) => {
   return (
     <>
       <div>
-          <p>A wild {encounterPokemon.name} appeared</p>
+        <p>A wild {encounterPokemon.name} appeared</p>
+
         <div className="pokemon-stats-selector">
           {detailedPokemon && (
             <DisplayDetails pokemon={detailedPokemon} onSelect={onSelect} />
           )}
-          <p>Against</p>
+          {detailedPokemon && (<p>Against</p>)}
           <DisplayDetails pokemon={encounterPokemon} />
         </div>
         <hr />
@@ -37,11 +38,11 @@ const Selector = ({ encounterPokemon, myPokemons, onSelect, goBack }) => {
           ))}
         </div>
       </div>
-          <div>
-      <button onClick={goBack} className="nes-btn is-warning">
-        Back
-      </button>
-      {detailedPokemon && <button onClick={() => onSelect(detailedPokemon)} className="nes-btn is-success">FIGHT !</button>}
+      <div>
+        <button onClick={goBack} className="nes-btn is-warning">
+          Back
+        </button>
+        {detailedPokemon && <button onClick={() => onSelect(detailedPokemon)} className="nes-btn is-success">FIGHT !</button>}
       </div>
     </>
   );
